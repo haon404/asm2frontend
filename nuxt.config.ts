@@ -10,5 +10,10 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ["shadcn-nuxt"]
+  modules: [
+    "shadcn-nuxt",
+    '@pinia/nuxt',
+    '@pinia-plugin-persistedstate/nuxt',
+    "@nuxt/eslint"
+  ]
 })

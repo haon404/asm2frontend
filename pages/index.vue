@@ -1,6 +1,5 @@
 <template>
-  <Button class="bg-black">Test</Button>
-  <div class="bg-black">Test</div>
+  <CardPopularJob></CardPopularJob>
 </template>
 
 <script lang="ts" setup></script>
