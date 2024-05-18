@@ -1,8 +1,8 @@
 <template>
-  <Card class="relative">
+  <Card class="relative w-full">
     <CardHeader>
       <CardDescription class="uppercase">{{
-        recruitment?.categoryIds
+        category?.name
       }}</CardDescription>
       <CardTitle>{{
         recruitment?.title
@@ -12,7 +12,7 @@
           recruitment?.address
         }}</CardDescription>
         <CardDescription>{{
-          recruitment?.companyId
+          company?.name
         }}</CardDescription>
       </div>
     </CardHeader>
@@ -23,6 +23,8 @@
 </template>
 
 <script lang="ts" setup>
+  import type { Category } from "~/interfaces/Category";
+  import type { Company } from "~/interfaces/Company";
   import type { Recruitment } from "~/interfaces/Recruitment";
 
   const recruitment = ref<Recruitment>();
@@ -31,7 +33,29 @@
     {
       method: "GET",
     }
-  ).then((r) => (recruitment.value = r));
+  )
+    .then((r) => (recruitment.value = r))
+    .catch((e) => console.log(e));
+
+  const company = ref<Company>();
+  await useHttp<Company>(
+    `/company/${recruitment.value?.companyId}`,
+    {
+      method: "GET",
+    }
+  )
+    .then((r) => (company.value = r))
+    .catch((e) => console.log(e));
+
+  const category = ref<Category>();
+  await useHttp<Category>(
+    `/category/${recruitment.value?.categoryIds[0]}`,
+    {
+      method: "GET",
+    }
+  )
+    .then((r) => (category.value = r))
+    .catch((e) => console.log(e));
 </script>
 
 <style scoped></style>
