@@ -3,10 +3,12 @@ export default defineNuxtRouteMiddleware((to, from) => {
     console.log(token && to.path === '/login')
 
     if (!token.value && to.path!== '/login' && to.path!== '/register' && to.path!== '/') {
-        navigateTo('/login')
+        return navigateTo('/login')
     }
 
     if (token.value && to.path === '/login') {
-        navigateTo('/')
+        console.log(token.value)
+        return navigateTo('/')
     }
+
 })

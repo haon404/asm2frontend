@@ -9,26 +9,17 @@
         :validationSchema="schema"
         class="flex flex-col max-w-screen-md border-2 p-6"
       >
-        <Label for="email">Email: </Label>
-        <ErrorMessage
-          class="text-red-500"
-          name="email"
-        />
-        <Field
+        <FormField
           name="email"
           type="email"
-          class="text-black"
-        />
-        <Label for="password">Password: </Label>
-        <ErrorMessage
-          class="text-red-500"
-          name="password"
-        />
-        <Field
-          class="text-black"
+        >
+          Email:
+        </FormField>
+        <FormField
           name="password"
           type="password"
-        />
+          >Password:
+        </FormField>
         <Separator
           class="bg-white h-[1px] w-full m-5 mx-auto"
           decorative
@@ -37,15 +28,19 @@
       </Form>
     </div>
   </div>
+  <UiToast v-model:open="open"
+    >Login Successfully</UiToast
+  >
+  <UiToast v-model:open="failed"
+    >Login Failed</UiToast
+  >
 </template>
 
 <script lang="ts" setup>
+  const open = ref(false);
+  const failed = ref(false);
+
   import * as yup from "yup";
-  import {
-    Form,
-    Field,
-    ErrorMessage,
-  } from "vee-validate";
 
   const schema = yup.object({
     email: yup.string().email().required(),
@@ -64,7 +59,12 @@
     );
     console.log(user.value);
     if (authenticated.value) {
-      navigateTo("/");
+      open.value = true;
+      window.setTimeout(() => {
+        navigateTo("/");
+      }, 1000);
+    } else {
+      failed.value = true;
     }
   }
 
