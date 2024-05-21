@@ -2,7 +2,14 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/css/tailwind.css'],
-  modules: ['radix-vue/nuxt'],
+  modules: ['radix-vue/nuxt', 
+    '@vee-validate/nuxt',
+    '@pinia/nuxt', // needed
+    '@pinia-plugin-persistedstate/nuxt',
+  ],
+  build: {
+    transpile: ['pinia-plugin-persistedstate']
+  },
   postcss: {
     plugins: {
       tailwindcss: {},

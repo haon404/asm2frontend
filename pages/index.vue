@@ -1,9 +1,8 @@
 <template>
   <SectionCategory />
   <Separator
-    class="bg-white SeparatorRoot"
+    class="bg-white h-[1px] w-full m-10 mx-auto container"
     decorative
-    orientation="vertical"
   />
   <SectionPopular />
 </template>
@@ -13,9 +12,4 @@
   import SectionPopular from "~/components/SectionPopular.vue";
 </script>
 
-<style scoped>
-  .SeparatorRoot[data-orientation="vertical"] {
-    height: 1px;
-    width: 100%;
-  }
-</style>
+<style scoped></style>

@@ -1,11 +1,11 @@
 <template>
-  <div
+  <button
     class="px-4 py-2 text-xl hover:cursor-pointer transition"
-    @click="navigateTo(props.to)"
+    @click="doNavigation"
     :class="props.variant"
   >
     <slot></slot>
-  </div>
+  </button>
 </template>
 
 <script lang="ts" setup>
@@ -18,6 +18,13 @@
       variant: "primary",
     }
   );
+  const doNavigation = () => {
+    if (props.to !== undefined) {
+      navigateTo(props.to);
+    } else {
+      return;
+    }
+  };
 </script>
 
 <style scoped>
