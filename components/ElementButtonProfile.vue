@@ -7,9 +7,7 @@
     </DropdownMenuTrigger>
     <DropdownMenuPortal>
       <DropdownMenuContent
-        class="border-2 border-white py-2 px-4 my-2"
-        align="end"
-        :avoid-collisions="true"
+        class="border-2 border-white py-2 px-4 my-2 bg-black"
       >
         <DropdownMenuItem
           class="hover:text-green-500 hover:cursor-pointer"
