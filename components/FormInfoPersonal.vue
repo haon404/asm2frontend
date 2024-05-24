@@ -76,6 +76,9 @@
       />
       <UiButton type="submit">Update</UiButton>
     </Form>
+    <UiToast v-model:open="open">{{
+      announcement
+    }}</UiToast>
   </div>
 </template>
 
@@ -88,6 +91,9 @@
   const profileImageUrl = ref<string | null>(
     null
   );
+
+  const announcement = ref<string>("");
+  const open = ref<boolean>(false);
 
   onMounted(async () => {
     if (user.value) {
@@ -126,8 +132,32 @@
     }
   }
 
-  function onUpdate(data: any) {
+  async function onUpdate(data: any) {
+    data = { ...data, id: user.value?.id };
     console.log(data);
+    // update user
+    await useHttp("/user/update", {
+      method: "POST",
+      body: data,
+    })
+      .then((response) => {
+        announcement.value =
+          "Updated successfully";
+        open.value = true;
+        // delay for 1 second before closing the toast
+        setTimeout(() => {
+          open.value = false;
+        }, 1000);
+      })
+      .catch((error) => {
+        console.log(error);
+        announcement.value = "Update failed";
+        open.value = true;
+        // delay for 1 second before closing the toast
+        setTimeout(() => {
+          open.value = false;
+        }, 1000);
+      });
   }
 
   const schema = yup.object({

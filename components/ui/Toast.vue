@@ -5,7 +5,7 @@
 <template>
   <ToastProvider :duration="1000">
     <ToastRoot
-      class="border-4 border-white fixed bottom-0 right-0 m-5 p-5"
+      class="border-4 border-white bg-black fixed bottom-0 right-0 m-5 p-5"
       v-model:open="open"
     >
       <ToastDescription>
