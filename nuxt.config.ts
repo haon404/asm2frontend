@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/tailwind.css'],
   modules: ['radix-vue/nuxt', 
     '@vee-validate/nuxt',
-    '@pinia/nuxt', // needed
+    '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
   ],
   build: {

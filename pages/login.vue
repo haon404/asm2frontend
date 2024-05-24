@@ -37,6 +37,10 @@
 </template>
 
 <script lang="ts" setup>
+  definePageMeta({
+    layout: false,
+  });
+
   const open = ref(false);
   const failed = ref(false);
 

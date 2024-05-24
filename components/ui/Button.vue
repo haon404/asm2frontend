@@ -29,6 +29,12 @@
 
 <style scoped>
   .primary {
-    @apply bg-green-500 text-white hover:bg-green-700;
+    @apply border-4 border-green-500 bg-green-500 text-white hover:bg-green-700 hover:border-green-700;
+  }
+  .account {
+    @apply border-4 border-white hover:border-green-500 hover:text-green-500;
+  }
+  .minimal {
+    @apply hover:text-green-500;
   }
 </style>

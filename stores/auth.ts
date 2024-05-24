@@ -2,9 +2,9 @@ import { defineStore } from 'pinia'
 import type { User } from '~/types/User'
 
 export const useAuthStore = defineStore('Auth', () => {
-  const user = ref<User>()
+  const user = ref<User | null>()
   const authenticated = ref(false)
-  const token = useCookie<string>('token')
+  const token = useCookie<string | null>('token')
 
   async function authenticateUser(email: string, password: string) {
     const authentication = btoa(email + ':' + password)
@@ -15,6 +15,7 @@ export const useAuthStore = defineStore('Auth', () => {
       },
     }).then((response) => {
       token.value = response
+      console.log(response)
     }).catch(e => console.log(e))
 
     await useHttp<User>(`/user`, {
@@ -27,5 +28,11 @@ export const useAuthStore = defineStore('Auth', () => {
     }).catch(e => console.log(e))
   }
 
-  return { authenticateUser, user, authenticated }
-})
+  function logoutUser() {
+    token.value = null
+    user.value = null
+    authenticated.value = false
+  }
+
+  return { authenticateUser, user, authenticated, logoutUser }
+}, {persist: true})

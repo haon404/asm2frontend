@@ -8,7 +8,6 @@ export const useHttp = <T>(url: string, options?: NitroFetchOptions<NitroFetchRe
     return $fetch<T>(baseUrl.value + url, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token.value}`
       },
       ...options,
@@ -17,9 +16,6 @@ export const useHttp = <T>(url: string, options?: NitroFetchOptions<NitroFetchRe
 
   return $fetch<T>(baseUrl.value + url, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
     ...options,
   })
 }

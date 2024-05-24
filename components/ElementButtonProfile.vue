@@ -1,8 +1,8 @@
 <template>
   <DropdownMenuRoot v-model:open="open">
     <DropdownMenuTrigger as-child>
-      <UiButton variant="profile"
-        >Button</UiButton
+      <UiButton variant="account"
+        >Account</UiButton
       >
     </DropdownMenuTrigger>
     <DropdownMenuPortal>
@@ -13,7 +13,8 @@
       >
         <DropdownMenuItem
           class="hover:text-green-500 hover:cursor-pointer"
-          >Tab 1</DropdownMenuItem
+          @click="navigateTo('/profile')"
+          >Profile</DropdownMenuItem
         >
         <Separator
           class="bg-white h-[1px] w-full m-2 mx-auto container"
@@ -21,7 +22,8 @@
         />
         <DropdownMenuItem
           class="hover:text-green-500 hover:cursor-pointer"
-          >Tab 2</DropdownMenuItem
+          @click="logoutUser"
+          >Logout</DropdownMenuItem
         >
       </DropdownMenuContent>
     </DropdownMenuPortal>
@@ -30,6 +32,16 @@
 
 <script lang="ts" setup>
   const open = ref(false);
+  const { logoutUser } = useAuthStore();
+  const { authenticated } = storeToRefs(
+    useAuthStore()
+  );
+  watch(authenticated, () => {
+    if (!authenticated) {
+      console.log("not authenticated");
+      navigateTo("/");
+    }
+  });
 </script>
 
 <style scoped></style>

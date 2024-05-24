@@ -30,7 +30,10 @@
           >Confirm Password:
         </FormField>
 
-        <FormFieldSelect name="role">
+        <FormField
+          type="select"
+          name="role"
+        >
           Role:
           <template #options>
             <option value="APPLICANT">
@@ -40,7 +43,7 @@
               Recruiter
             </option>
           </template>
-        </FormFieldSelect>
+        </FormField>
 
         <Separator
           class="bg-white h-[1px] w-full m-5 mx-auto"
@@ -59,6 +62,10 @@
 </template>
 
 <script lang="ts" setup>
+  definePageMeta({
+    layout: false,
+  });
+
   const open = ref(false);
   const failed = ref(false);
 
@@ -91,6 +98,10 @@
     })
       .then((res) => {
         open.value = true;
+        // delay for 1s
+        setTimeout(() => {
+          open.value = false;
+        }, 1000);
         navigateTo("/login");
       })
       .catch((err) => {
