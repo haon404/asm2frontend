@@ -20,7 +20,7 @@
   );
   const doNavigation = () => {
     if (props.to !== undefined) {
-      navigateTo(props.to);
+      return navigateTo(props.to);
     } else {
       return;
     }

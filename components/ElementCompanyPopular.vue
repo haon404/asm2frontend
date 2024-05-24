@@ -1,11 +1,21 @@
 <template>
   <div class="flex flex-col">
     <div class="">Popular Company</div>
-    <div class="h-32 w-32">
+    <div
+      class="w-32 h-32 overflow-hidden rounded-full"
+    >
       <img
-        src="#"
-        alt="#"
+        v-if="profileImageUrl"
+        :src="profileImageUrl"
+        alt="Profile Image"
+        class="w-full h-full"
       />
+      <div
+        v-else
+        class="text-center"
+      >
+        No Profile Image
+      </div>
     </div>
     <div class="text-xl">{{ company?.name }}</div>
     <div class="flex flex-row gap-x-1">
@@ -25,6 +35,7 @@
   import type { Company } from "~/types/Company";
 
   const company = ref<Company>();
+
   await useHttp<Company>(`/company/popular`, {
     method: "GET",
   })
@@ -38,6 +49,16 @@
         .length;
     } else {
       return 0;
+    }
+  });
+  const profileImageUrl = ref<string | null>();
+  onMounted(async () => {
+    if (company.value) {
+      const file = await useHttp<File>(
+        `/company/${company.value.id}/picture`
+      );
+      profileImageUrl.value =
+        URL.createObjectURL(file);
     }
   });
 </script>

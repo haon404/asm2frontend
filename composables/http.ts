@@ -1,6 +1,6 @@
 import type { NitroFetchOptions, NitroFetchRequest } from 'nitropack'
 
-export const useHttp = <T>(url: string, options?: NitroFetchOptions<NitroFetchRequest>) => {
+export const useHttp = <T>(url: string, options?: NitroFetchOptions<NitroFetchRequest>)  => {
   const token = useCookie<string>('token')
   const baseUrl = ref('http://localhost:8080/api/v1')
 

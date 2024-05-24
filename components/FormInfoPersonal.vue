@@ -4,11 +4,14 @@
       Personal Information
     </h1>
     <!-- Todo update profile picture -->
-    <div class="w-28 h-28">
+    <div
+      class="w-28 h-28 overflow-hidden rounded-full"
+    >
       <img
         v-if="profileImageUrl"
         :src="profileImageUrl"
         alt="Profile Image"
+        class="w-full h-full"
       />
       <div
         v-else
@@ -86,11 +89,23 @@
     null
   );
 
+  onMounted(async () => {
+    if (user.value) {
+      const file = await useHttp<File>(
+        `/user/${user.value.id}/picture`
+      );
+      if (file) {
+        profileImageUrl.value =
+          URL.createObjectURL(file);
+      }
+    }
+  });
+
   async function onFileSelected(event: Event) {
     const file = (
       event.target as HTMLInputElement
     ).files?.[0];
-    if (file) {
+    if (file && user.value) {
       profileImageUrl.value =
         URL.createObjectURL(file);
 
@@ -98,7 +113,7 @@
       formData.append("file", file);
       console.log(formData.get("file"));
       await useHttp(
-        `/user/${user.value?.id}/picture`,
+        `/user/${user.value.id}/picture`,
         {
           method: "POST",
           body: formData,
@@ -118,9 +133,15 @@
   const schema = yup.object({
     email: yup.string().email().required(),
     fullName: yup.string().required(),
-    address: yup.string().required(),
-    phoneNumber: yup.string().required(),
-    description: yup.string().required(),
+    address: yup.string().optional().nullable(),
+    phoneNumber: yup
+      .string()
+      .optional()
+      .nullable(),
+    description: yup
+      .string()
+      .optional()
+      .nullable(),
   });
 </script>
 

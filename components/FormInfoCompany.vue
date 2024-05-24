@@ -7,11 +7,14 @@
       Company Information
     </h1>
     <!-- Todo update profile picture -->
-    <div class="w-28 h-28">
+    <div
+      class="w-28 h-28 overflow-hidden rounded-full"
+    >
       <img
         v-if="profileImageUrl"
         :src="profileImageUrl"
         alt="Profile Image"
+        class="object-fill w-full h-full aspect-square"
       />
       <div
         v-else
@@ -86,14 +89,17 @@
   );
 
   const company = ref<Company>();
-  onMounted(() => {
+  onMounted(async () => {
     const companyId = user.value?.companyId;
     if (companyId) {
-      useHttp<Company>(`/company/${companyId}`)
-        .then((r) => {
-          company.value = r;
-        })
-        .catch((e) => console.log(e));
+      company.value = await useHttp<Company>(
+        `/company/${companyId}`
+      );
+      const file = await useHttp<File>(
+        `/company/${company.value.id}/picture`
+      );
+      profileImageUrl.value =
+        URL.createObjectURL(file);
     }
   });
 
@@ -101,7 +107,7 @@
     const file = (
       event.target as HTMLInputElement
     ).files?.[0];
-    if (file) {
+    if (file && company.value) {
       profileImageUrl.value =
         URL.createObjectURL(file);
 
@@ -109,7 +115,7 @@
       formData.append("file", file);
       console.log(formData.get("file"));
       await useHttp(
-        `/company/${company.value?.id}/picture`,
+        `/company/${company.value.id}/picture`,
         {
           method: "POST",
           body: formData,
@@ -129,9 +135,15 @@
   const schema = yup.object({
     email: yup.string().email().required(),
     name: yup.string().required(),
-    address: yup.string().required(),
-    phoneNumber: yup.string().required(),
-    description: yup.string().required(),
+    address: yup.string().optional().nullable(),
+    phoneNumber: yup
+      .string()
+      .optional()
+      .nullable(),
+    description: yup
+      .string()
+      .optional()
+      .nullable(),
   });
 </script>
 
