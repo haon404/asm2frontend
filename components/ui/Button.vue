@@ -37,4 +37,10 @@
   .minimal {
     @apply hover:text-green-500;
   }
+  .blue {
+    @apply border-4 border-blue-500 bg-blue-500 text-white hover:bg-blue-700 hover:border-blue-700;
+  }
+  .danger {
+    @apply border-4 border-red-500 bg-red-500 text-white hover:bg-red-700 hover:border-red-700;
+  }
 </style>

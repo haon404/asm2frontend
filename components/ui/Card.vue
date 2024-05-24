@@ -4,7 +4,7 @@
   >
     <div class="flex flex-col">
       <div
-        class="text-green-500 text-sm uppercase"
+        class="text-green-500 text-sm uppercase flex flex-row gap-x-3"
       >
         <slot name="header"></slot>
       </div>

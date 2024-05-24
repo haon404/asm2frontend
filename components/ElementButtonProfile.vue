@@ -8,11 +8,22 @@
     <DropdownMenuPortal>
       <DropdownMenuContent
         class="border-2 border-white py-2 px-4 my-2 bg-black"
+        align="end"
       >
         <DropdownMenuItem
           class="hover:text-green-500 hover:cursor-pointer"
           @click="navigateTo('/profile')"
           >Profile</DropdownMenuItem
+        >
+        <DropdownMenuItem
+          class="hover:text-green-500 hover:cursor-pointer"
+          v-if="
+            user?.roleRoleName === 'RECRUITER'
+          "
+          @click="
+            navigateTo('/profile/recruitments')
+          "
+          >Manage Recruitments</DropdownMenuItem
         >
         <Separator
           class="bg-white h-[1px] w-full m-2 mx-auto container"
@@ -31,7 +42,7 @@
 <script lang="ts" setup>
   const open = ref(false);
   const { logoutUser } = useAuthStore();
-  const { authenticated } = storeToRefs(
+  const { user, authenticated } = storeToRefs(
     useAuthStore()
   );
   watch(authenticated, () => {
